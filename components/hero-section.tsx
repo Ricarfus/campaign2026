@@ -32,22 +32,10 @@ export function HeroSection() {
       return
     }
 
-    const entrance = gsap.timeline()
-
-    // Effect 1: each name slides in from the left edge of its clipped wrapper.
-    // No opacity — the wrapper's edge is the hard line the letters emerge from.
-    entrance.fromTo(names, { x: "-14vw" }, { x: "0vw", duration: 1.2, stagger: 0.15, ease: "entrance" })
-
-    // The bottom row rises, line by line, out of its own mask.
-    entrance.fromTo(
-      bottomLines,
-      { yPercent: MASK_FROM_Y },
-      { yPercent: 0, duration: MASK_DURATION, stagger: MASK_STAGGER, ease: MASK_EASE },
-      0.9,
-    )
-
-    // Effect 2: slide out, scrubbed to the hero's scroll exit. The exit keeps
-    // its fade; only entrances are fade-free.
+    // Effect 2: the scroll exit is built FIRST, with explicit start values. A
+    // plain .to() captures whatever value is current when it is created — which
+    // would be the entrance's -14vw — so scrolling back to the top would leave
+    // the names shifted left and clipped by their wrapper.
     const scrollTween = gsap.timeline({
       scrollTrigger: {
         trigger: sectionRef.current,
@@ -57,11 +45,35 @@ export function HeroSection() {
       },
     })
     if (hudsonRef.current) {
-      scrollTween.to(hudsonRef.current, { x: "-18vw", opacity: 0, ease: "none" }, 0)
+      scrollTween.fromTo(
+        hudsonRef.current,
+        { x: "0vw", opacity: 1 },
+        { x: "-18vw", opacity: 0, ease: "none", immediateRender: false },
+        0,
+      )
     }
     if (rufusRef.current) {
-      scrollTween.to(rufusRef.current, { x: "18vw", opacity: 0, ease: "none" }, 0)
+      scrollTween.fromTo(
+        rufusRef.current,
+        { x: "0vw", opacity: 1 },
+        { x: "18vw", opacity: 0, ease: "none", immediateRender: false },
+        0,
+      )
     }
+
+    // Effect 1: each name then slides in from the left edge of its clipped
+    // wrapper. No opacity — the wrapper's edge is the hard line the letters
+    // emerge from. Built last so it owns x while the page is loading.
+    const entrance = gsap.timeline()
+    entrance.fromTo(names, { x: "-14vw" }, { x: "0vw", duration: 1.2, stagger: 0.15, ease: "entrance" })
+
+    // The bottom row rises, line by line, out of its own mask.
+    entrance.fromTo(
+      bottomLines,
+      { yPercent: MASK_FROM_Y },
+      { yPercent: 0, duration: MASK_DURATION, stagger: MASK_STAGGER, ease: MASK_EASE },
+      0.9,
+    )
 
     return () => {
       entrance.kill()

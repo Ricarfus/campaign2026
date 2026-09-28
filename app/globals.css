@@ -90,14 +90,14 @@ button:focus-visible {
 
 .display-hero {
   font-family: var(--font-display);
-  font-size: clamp(3.25rem, 21vw, 6rem);
+  font-size: clamp(3rem, 18.5vw, 5.25rem);
   line-height: 0.9;
   letter-spacing: -0.02em;
 }
 
 @media (min-width: 768px) {
   .display-hero {
-    font-size: clamp(3.5rem, 14.5vw, 19rem);
+    font-size: clamp(3rem, 12.75vw, 16.5rem);
     line-height: 0.88;
   }
 }
@@ -401,6 +401,14 @@ section {
   justify-content: space-between;
   min-height: 100svh;
   padding: clamp(96px, 16vh, 176px) var(--pad) 40px;
+}
+
+@media (min-width: 1024px) {
+  /* No top bar on desktop, so the names can sit near the top edge (~50px down,
+     per the reference) instead of reading as vertically centred. */
+  .hero {
+    padding-top: 50px;
+  }
 }
 
 .hero-h1 {
