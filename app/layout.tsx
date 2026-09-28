@@ -1,14 +1,6 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import { Libre_Caslon_Display } from 'next/font/google'
 import './globals.css'
-
-const libreCaslon = Libre_Caslon_Display({
-  weight: '400',
-  subsets: ['latin'],
-  variable: '--font-libre-caslon',
-  display: 'swap',
-})
 
 export const metadata: Metadata = {
   title: 'Hudson & Rufus, Student Council Election 2026',
@@ -32,8 +24,14 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={libreCaslon.variable}>
+    <html lang="en">
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&display=swap"
+        />
         <link rel="preconnect" href="https://api.fontshare.com" />
         <link
           rel="stylesheet"

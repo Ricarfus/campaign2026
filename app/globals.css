@@ -26,7 +26,7 @@ html {
   --accent: #b7c4a0;
 
   /* Fonts (Section 5) */
-  --font-display: var(--font-libre-caslon), 'Times New Roman', serif;
+  --font-display: 'Libre Caslon Display', 'Times New Roman', serif;
   --font-sub: 'Switzer', 'Helvetica Neue', Arial, sans-serif;
   --font-body: 'Supreme', 'Helvetica Neue', Arial, sans-serif;
 
