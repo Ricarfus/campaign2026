@@ -171,6 +171,30 @@ button:focus-visible {
 }
 
 /* ---------------------------------- */
+/* Masked reveals (Section 8)         */
+/* ---------------------------------- */
+
+/* Text slides out of a hard edge instead of fading in. The padding gives the
+   mask room for ascenders, descenders and overhangs; the matching negative
+   margin keeps the element's layout box exactly as it was. */
+.mask {
+  display: block;
+  overflow: hidden;
+  padding: 0.2em 0.14em;
+  margin: -0.2em -0.14em;
+}
+
+.mask-inner {
+  display: block;
+}
+
+/* Clips a portrait while it slides in from the side. */
+.portrait-mask {
+  display: block;
+  overflow: hidden;
+}
+
+/* ---------------------------------- */
 /* Desktop sidebar rail (>=1024px)    */
 /* ---------------------------------- */
 
@@ -693,7 +717,7 @@ section {
 
   .hero-name,
   .hero-bottom,
-  .tw-char,
+  .mask-inner,
   .portrait,
   .duo-info,
   .promise-rule,

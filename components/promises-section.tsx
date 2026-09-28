@@ -4,7 +4,8 @@ import { gsap } from "gsap"
 import { CustomEase } from "gsap/CustomEase"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { useEffect, useRef } from "react"
-import { TypewriterHeading } from "@/components/typewriter-heading"
+import { RevealHeading } from "@/components/reveal-heading"
+import { MASK_EASE, MASK_FROM_Y, prefersReducedMotion } from "@/lib/motion"
 import { useLanguage } from "@/lib/i18n"
 
 if (typeof window !== "undefined") {
@@ -23,26 +24,26 @@ export function PromisesSection() {
   rowRefs.current = []
 
   useEffect(() => {
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
     const rows = rowRefs.current
 
-    if (reduced) {
+    if (prefersReducedMotion()) {
       rows.forEach((row) => {
         const rule = row.querySelector(".promise-rule")
-        const title = row.querySelector(".promise-title")
+        const inner = row.querySelector(".promise-title .mask-inner")
         if (rule) gsap.set(rule, { scaleX: 1 })
-        gsap.set(title, { opacity: 1, x: 0 })
+        gsap.set(inner, { yPercent: 0 })
       })
       return
     }
 
-    // Effect 6: each row's rule draws left-to-right while its title slides in and fades.
+    // Effect 6: the row's rule draws left-to-right while its title rises out of
+    // the mask. No opacity — the title slides, it does not fade.
     const timelines = rows.map((row) => {
       const rule = row.querySelector(".promise-rule")
-      const title = row.querySelector(".promise-title")
+      const inner = row.querySelector(".promise-title .mask-inner")
       const tl = gsap.timeline({ scrollTrigger: { trigger: row, start: "top 88%", once: true } })
       tl.fromTo(rule, { scaleX: 0 }, { scaleX: 1, duration: 0.8, ease: "none" }, 0)
-      tl.fromTo(title, { x: -40, opacity: 0 }, { x: 0, opacity: 1, duration: 0.8, ease: "entrance" }, 0)
+      tl.fromTo(inner, { yPercent: MASK_FROM_Y }, { yPercent: 0, duration: 0.9, ease: MASK_EASE }, 0)
       return tl
     })
 
@@ -57,7 +58,7 @@ export function PromisesSection() {
     <section id="promises" aria-labelledby="promises-heading">
       <div className="promises-body">
         <div className="promises-heading-col">
-          <TypewriterHeading id="promises-heading" className="h2" text={t("promises.heading")} />
+          <RevealHeading id="promises-heading" className="h2" text={t("promises.heading")} />
         </div>
 
         <div className="promises-list">
@@ -70,7 +71,11 @@ export function PromisesSection() {
               className="promise-row"
             >
               <span className="promise-rule" aria-hidden="true" />
-              <h3 className="h3 promise-title">{t(`${key}.title`)}</h3>
+              <h3 className="h3 promise-title">
+                <span className="mask">
+                  <span className="mask-inner">{t(`${key}.title`)}</span>
+                </span>
+              </h3>
             </div>
           ))}
           <span className="promise-rule promise-rule--final" aria-hidden="true" />

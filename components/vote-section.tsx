@@ -3,7 +3,14 @@
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { useEffect, useRef } from "react"
-import { TypewriterHeading } from "@/components/typewriter-heading"
+import { RevealHeading } from "@/components/reveal-heading"
+import {
+  MASK_DURATION,
+  MASK_EASE,
+  MASK_FROM_Y,
+  MASK_STAGGER,
+  prefersReducedMotion,
+} from "@/lib/motion"
 import { useLanguage } from "@/lib/i18n"
 
 if (typeof window !== "undefined") {
@@ -15,21 +22,33 @@ const INSTAGRAM_URL = ""
 
 export function VoteSection() {
   const { t } = useLanguage()
+  const sectionRef = useRef<HTMLElement>(null)
   const headingRef = useRef<HTMLHeadingElement>(null)
-  const sloganRef = useRef<HTMLParagraphElement>(null)
 
   useEffect(() => {
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    if (reduced) {
-      gsap.set(sloganRef.current, { opacity: 1 })
+    const lines = sectionRef.current
+      ? Array.from(
+          sectionRef.current.querySelectorAll<HTMLElement>(
+            ".vote-date .mask-inner, .vote-slogan .mask-inner",
+          ),
+        )
+      : []
+
+    if (prefersReducedMotion()) {
+      gsap.set(lines, { yPercent: 0 })
       return
     }
 
-    // Effect 7: slogan fades in after the headline's typewriter reveal finishes.
+    // Effect 7: the date and slogan rise out of their masks once the headline
+    // has revealed. Masked slides only — no opacity.
     const tl = gsap.timeline({
-      scrollTrigger: { trigger: headingRef.current, start: "top 35%", once: true },
+      scrollTrigger: { trigger: headingRef.current, start: "top 45%", once: true },
     })
-    tl.fromTo(sloganRef.current, { opacity: 0 }, { opacity: 1, duration: 0.8 })
+    tl.fromTo(
+      lines,
+      { yPercent: MASK_FROM_Y },
+      { yPercent: 0, duration: MASK_DURATION, stagger: MASK_STAGGER, ease: MASK_EASE },
+    )
 
     return () => {
       tl.scrollTrigger?.kill()
@@ -38,12 +57,26 @@ export function VoteSection() {
   }, [])
 
   return (
-    <section id="vote" aria-labelledby="vote-heading">
-      <TypewriterHeading ref={headingRef} id="vote-heading" className="vote-headline" text={t("vote.heading")} />
-      <h3 className="h3 vote-date">{t("vote.date")}</h3>
-      <p ref={sloganRef} className="vote-slogan body-text">
-        {t("vote.slogan")}
+    <section id="vote" ref={sectionRef} aria-labelledby="vote-heading">
+      <RevealHeading
+        ref={headingRef}
+        id="vote-heading"
+        className="vote-headline"
+        text={t("vote.heading")}
+      />
+
+      <h3 className="h3 vote-date">
+        <span className="mask">
+          <span className="mask-inner">{t("vote.date")}</span>
+        </span>
+      </h3>
+
+      <p className="vote-slogan body-text">
+        <span className="mask">
+          <span className="mask-inner">{t("vote.slogan")}</span>
+        </span>
       </p>
+
       {INSTAGRAM_URL && (
         <a href={INSTAGRAM_URL} className="vote-follow meta" target="_blank" rel="noreferrer">
           {t("vote.follow")}
