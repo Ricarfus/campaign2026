@@ -71,7 +71,7 @@ export function VoteSection() {
         </span>
       </h3>
 
-      <p className="vote-slogan body-text">
+      <p className="vote-slogan">
         <span className="mask">
           <span className="mask-inner">{t("vote.slogan")}</span>
         </span>
