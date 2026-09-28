@@ -244,6 +244,10 @@ button:focus-visible {
     writing-mode: vertical-rl;
     transform: rotate(180deg);
     color: var(--text-muted);
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 0.75rem;
+    line-height: 1;
     margin: 0 0 32px;
     flex-shrink: 0;
   }
@@ -390,28 +394,6 @@ section {
 .hero-name {
   display: block;
   text-transform: uppercase;
-}
-
-.hero-top {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.hero-descriptor {
-  max-width: 24ch;
-  margin: 88px 0 0;
-  text-align: left;
-  color: var(--text);
-}
-
-@media (max-width: 767px) {
-  .hero-top {
-    justify-content: flex-start;
-  }
-
-  .hero-descriptor {
-    margin-top: 24px;
-  }
 }
 
 .hero-bottom {
@@ -713,7 +695,6 @@ section {
   }
 
   .hero-name,
-  .hero-descriptor,
   .hero-bottom,
   .tw-char,
   .portrait,

@@ -52,6 +52,7 @@ export const I18N: Record<Lang, Record<string, string>> = {
     "footer.copy": "© 2026 Hudson Biggar and Rufus Potié",
     "footer.school": "Student council campaign, École Secondaire Jules Verne",
     "footer.top": "Back to top",
+    "rail.copy": "©2026",
   },
   fr: {
     "meta.title": "Hudson et Rufus, Élection du conseil étudiant 2026",
@@ -95,6 +96,7 @@ export const I18N: Record<Lang, Record<string, string>> = {
     "footer.copy": "© 2026 Hudson Biggar et Rufus Potié",
     "footer.school": "Campagne du conseil étudiant, École Secondaire Jules Verne",
     "footer.top": "Retour en haut",
+    "rail.copy": "©2026",
   },
 }
 

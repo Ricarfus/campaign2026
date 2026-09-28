@@ -50,8 +50,8 @@ export function SidebarNav() {
         </ul>
       </nav>
 
-      <p className="rail-copy meta" data-i18n-fade>
-        {t("footer.copy")}
+      <p className="rail-copy" data-i18n-fade>
+        {t("rail.copy")}
       </p>
     </div>
   )

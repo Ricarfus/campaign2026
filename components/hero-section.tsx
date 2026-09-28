@@ -16,7 +16,6 @@ export function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null)
   const hudsonRef = useRef<HTMLSpanElement>(null)
   const rufusRef = useRef<HTMLSpanElement>(null)
-  const descRef = useRef<HTMLParagraphElement>(null)
   const bottomRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -25,20 +24,18 @@ export function HeroSection() {
 
     if (reduced) {
       gsap.set(names, { opacity: 1, x: 0 })
-      gsap.set(descRef.current, { opacity: 1 })
       gsap.set(bottomRef.current, { opacity: 1 })
       return
     }
 
     const entrance = gsap.timeline()
 
-    // Effect 1: big slide-in for the hero names, then descriptor and bottom row fade in.
+    // Effect 1: big slide-in for the hero names, then the bottom row fades in.
     entrance.fromTo(
       names,
       { x: "-14vw", opacity: 0 },
       { x: "0vw", opacity: 1, duration: 1.2, stagger: 0.15, ease: "entrance" },
     )
-    entrance.fromTo(descRef.current, { opacity: 0 }, { opacity: 1, duration: 0.8 }, 0.6)
     entrance.fromTo(bottomRef.current, { opacity: 0 }, { opacity: 1, duration: 0.8 }, 0.9)
 
     // Effect 2: slide out, scrubbed to the hero's scroll exit.
@@ -79,12 +76,6 @@ export function HeroSection() {
         </span>
         <span className="sr-only">{t("hero.descriptor")}</span>
       </h1>
-
-      <div className="hero-top">
-        <p ref={descRef} className="hero-descriptor lead" data-i18n-fade>
-          {t("hero.descriptor")}
-        </p>
-      </div>
 
       <div ref={bottomRef} className="hero-bottom" data-i18n-fade>
         <div className="hero-bottom-group">
