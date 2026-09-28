@@ -592,18 +592,15 @@ section {
 
 .promise-title {
   color: var(--text);
-  margin: 16px 0 8px;
+  font-size: clamp(1.75rem, 3.2vw, 3.25rem);
+  line-height: 1.05;
+  margin: 16px 0 0;
   transition: color 200ms ease;
 }
 
 .promise-row:hover .promise-title,
 .promise-row:focus-within .promise-title {
   color: var(--accent);
-}
-
-.promise-desc {
-  color: var(--text-muted);
-  margin: 0;
 }
 
 /* ---------------------------------- */
@@ -701,7 +698,6 @@ section {
   .duo-info,
   .promise-rule,
   .promise-title,
-  .promise-desc,
   .vote-slogan {
     opacity: 1;
     transform: none;

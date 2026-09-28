@@ -29,23 +29,20 @@ export function PromisesSection() {
     if (reduced) {
       rows.forEach((row) => {
         const rule = row.querySelector(".promise-rule")
-        const rest = row.querySelectorAll(".promise-title, .promise-desc")
+        const title = row.querySelector(".promise-title")
         if (rule) gsap.set(rule, { scaleX: 1 })
-        gsap.set(rest, { opacity: 1, x: 0 })
+        gsap.set(title, { opacity: 1, x: 0 })
       })
       return
     }
 
-    // Effect 6: each row's rule draws left-to-right while its title slides in and fades,
-    // then the description fades in slightly after.
+    // Effect 6: each row's rule draws left-to-right while its title slides in and fades.
     const timelines = rows.map((row) => {
       const rule = row.querySelector(".promise-rule")
       const title = row.querySelector(".promise-title")
-      const desc = row.querySelector(".promise-desc")
       const tl = gsap.timeline({ scrollTrigger: { trigger: row, start: "top 88%", once: true } })
       tl.fromTo(rule, { scaleX: 0 }, { scaleX: 1, duration: 0.8, ease: "none" }, 0)
       tl.fromTo(title, { x: -40, opacity: 0 }, { x: 0, opacity: 1, duration: 0.8, ease: "entrance" }, 0)
-      tl.fromTo(desc, { opacity: 0 }, { opacity: 1, duration: 0.8 }, 0.15)
       return tl
     })
 
@@ -74,7 +71,6 @@ export function PromisesSection() {
             >
               <span className="promise-rule" aria-hidden="true" />
               <h3 className="h3 promise-title">{t(`${key}.title`)}</h3>
-              <p className="body-text promise-desc">{t(`${key}.desc`)}</p>
             </div>
           ))}
           <span className="promise-rule promise-rule--final" aria-hidden="true" />
