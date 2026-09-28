@@ -65,17 +65,17 @@ export function VoteSection() {
         text={t("vote.heading")}
       />
 
-      <h3 className="h3 vote-date">
-        <span className="mask">
-          <span className="mask-inner">{t("vote.date")}</span>
-        </span>
-      </h3>
-
       <p className="vote-slogan">
         <span className="mask">
           <span className="mask-inner">{t("vote.slogan")}</span>
         </span>
       </p>
+
+      <h3 className="h3 vote-date">
+        <span className="mask">
+          <span className="mask-inner">{t("vote.date")}</span>
+        </span>
+      </h3>
 
       {INSTAGRAM_URL && (
         <a href={INSTAGRAM_URL} className="vote-follow meta" target="_blank" rel="noreferrer">

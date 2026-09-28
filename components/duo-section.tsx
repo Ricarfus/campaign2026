@@ -111,7 +111,7 @@ export function DuoSection() {
             </p>
             <p className="body-text grade-text">
               <span className="mask">
-                <span className="mask-inner">{renderGrade(t("grade"), lang)}</span>
+                <span className="mask-inner">{renderGrade(t("hudson.grade"), lang)}</span>
               </span>
             </p>
           </div>
@@ -139,7 +139,7 @@ export function DuoSection() {
             </p>
             <p className="body-text grade-text">
               <span className="mask">
-                <span className="mask-inner">{renderGrade(t("grade"), lang)}</span>
+                <span className="mask-inner">{renderGrade(t("rufus.grade"), lang)}</span>
               </span>
             </p>
           </div>
